@@ -1,4 +1,7 @@
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SpotifyApiWrapper.Entities;
 
 namespace SpotifyApiWrapper.Authentication
 {
@@ -13,23 +16,32 @@ namespace SpotifyApiWrapper.Authentication
         }
 
         //get the access token
-        public static string GetToken(AuthParameters authParameters)
+        public async static Task<Token> GetToken()
         {
-            var client = new HttpClient() { BaseAddress = new Uri("https://accounts.spotify.com/api/token") };
+            var client = new HttpClient();
 
-            var token = client.GetStringAsync()
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://accounts.spotify.com/api/token");
+            request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
 
+            { "client_id", "3857882ba2e9439ebd7066d97dc6203d" },
+            { "client_secret", "921d5dfb5b8840839f6e25ba3090c0d8" },
+            { "grant_type", "client_credentials" }
+            });
+
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
+            var token = new Token
+            {
+                AccessToken = payload.Value<string>("access_token"),
+                ExpiresIn = payload.Value<int>("expires_in"),
+                TokenType = payload.Value<string>("token_type")
+            };
+
+            return token;
         }
 
 
-    }
-
-    public class AuthParameters
-    {
-        public string? ClientId { get; set; }
-        public string? ClientSecret { get; set; }
-        public string? RedirectUri { get; set; }
-        public string? Scope { get; set; }
-        public string? GrantType { get; set; }
     }
 }
