@@ -17,14 +17,14 @@ namespace SpotifyApiWrapper.Entities
         public List<string>? AvailableMarkets { get; set; }
 
         [JsonPropertyName("external_urls")]
-        public List<KeyValueItem>? ExternalUrls { get; set; }
+        public Dictionary<string,string>? ExternalUrls { get; set; }
 
         [JsonPropertyName("href")]
         public string? Href { get; set; }
 
         [JsonPropertyName("id")]
         public string? Id { get; set; }
-
+        
         [JsonPropertyName("images")]
         public List<Image>? Images { get; set; }
 
@@ -38,7 +38,7 @@ namespace SpotifyApiWrapper.Entities
         public string? ReleaseDatePrecision { get; set; }
 
         [JsonPropertyName("restrictions")]
-        public List<KeyValueItem>? Restrictions { get; set; }
+        public Dictionary<string, string>? Restrictions { get; set; }
 
         [JsonPropertyName("type")]
         public string? Type { get; set; }
@@ -50,9 +50,10 @@ namespace SpotifyApiWrapper.Entities
         public List<Artist>? Artists { get; set; }
 
         [JsonPropertyName("tracks")]
-        public List<Track>? Tracks { get; set; }
+        public Paging<Track>? Tracks { get; set; }
 
 
 
     }
+
 }

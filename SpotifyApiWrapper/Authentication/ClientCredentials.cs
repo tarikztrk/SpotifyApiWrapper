@@ -1,46 +1,53 @@
+using System.Net;
 using System.Text;
+using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyApiWrapper.Entities;
 
 namespace SpotifyApiWrapper.Authentication
 {
-    public static class ClientCredentials
+    public class ClientCredentials : IClientCredentials
     {
-        public static string ClientId = "";
-        public static string ClientSecret = "";
+        private readonly HttpClient _httpClient;
 
-        public static string GetAuthorizationHeader()
+        public ClientCredentials(HttpClient httpClient)
         {
-            return $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes($"{ClientId}:{ClientSecret}"))}";
+            _httpClient = httpClient;
+        }
+
+        public string GetAuthorizationHeader()
+        {
+            return $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes($"3857882ba2e9439ebd7066d97dc6203d:e93d3b732f4d4ec789b79b30fe6cda3e"))}";
         }
 
         //get the access token
-        public async static Task<Token> GetToken()
+        public async Task<Token> GetToken(AuthParameters parameters)
         {
-            var client = new HttpClient();
-
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://accounts.spotify.com/api/token");
-            request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
-
-            { "client_id", "3857882ba2e9439ebd7066d97dc6203d" },
-            { "client_secret", "921d5dfb5b8840839f6e25ba3090c0d8" },
-            { "grant_type", "client_credentials" }
-            });
-
-            var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
+            var url = $"https://accounts.spotify.com/api/token";
+            var request = WebRequest.CreateHttp(url);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Headers.Add("Authorization", GetAuthorizationHeader());
+            var body = $"grant_type={parameters.GrantType}&client_id={parameters.ClientId}&client_secret={parameters.ClientSecret}&redirect_uri={parameters.RedirectUri}";
+            var bodyBytes = Encoding.UTF8.GetBytes(body);
+            request.ContentLength = bodyBytes.Length;
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(bodyBytes, 0, bodyBytes.Length);
+            }
+            var response = await request.GetResponseAsync();
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            var parsedResponse = JObject.Parse(responseString);
             var token = new Token
             {
-                AccessToken = payload.Value<string>("access_token"),
-                ExpiresIn = payload.Value<int>("expires_in"),
-                TokenType = payload.Value<string>("token_type")
+                AccessToken = parsedResponse.Value<string>("access_token"),
+                ExpiresIn = parsedResponse.Value<int>("expires_in"),
+                TokenType = parsedResponse.Value<string>("token_type")
             };
-
             return token;
         }
+
 
 
     }

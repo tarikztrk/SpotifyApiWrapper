@@ -7,7 +7,7 @@ namespace SpotifyApiWrapper.Entities
     {
 
         [JsonPropertyName("external_urls")]
-        public List<KeyValueItem>? ExternalUrls { get; set; }
+        public Dictionary<string, string>? ExternalUrls { get; set; }
 
         [JsonPropertyName("followers")]
         public Followers? Followers { get; set; }

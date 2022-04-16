@@ -1,4 +1,5 @@
 
+using SpotifyApiWrapper.Authentication;
 using SpotifyApiWrapper.Managers;
 using SpotifyApiWrapper.Managers.Interfaces;
 
@@ -10,8 +11,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication();
+builder.Services.AddHttpClient();
+
 
 builder.Services.AddScoped<IAlbumManager, AlbumManager>();
+builder.Services.AddScoped<ITokenManager, TokenManager>();
+builder.Services.AddScoped<IClientCredentials, ClientCredentials>();
 
 var app = builder.Build();
 

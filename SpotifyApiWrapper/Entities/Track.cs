@@ -5,6 +5,8 @@ namespace SpotifyApiWrapper.Entities
 {
     public class Track
     {
+        
+
         [JsonPropertyName("album")]
         public Album? Album { get; set; }
 
@@ -24,10 +26,10 @@ namespace SpotifyApiWrapper.Entities
         public bool Explicit { get; set; }
 
         [JsonPropertyName("external_ids")]
-        public List<KeyValueItem>? ExternalIds { get; set; }
+        public Dictionary<string, string>? ExternalIds { get; set; }
 
         [JsonPropertyName("external_urls")]
-        public List<KeyValueItem>? ExternalUrls { get; set; }
+        public Dictionary<string, string>? ExternalUrls { get; set; }
 
         [JsonPropertyName("href")]
         public string? Href { get; set; }
