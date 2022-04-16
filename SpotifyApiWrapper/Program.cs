@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
 builder.Services.AddHttpClient();
-
+builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<IAlbumManager, AlbumManager>();
 builder.Services.AddScoped<ITokenManager, TokenManager>();
