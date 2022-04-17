@@ -1,19 +1,59 @@
+using SpotifyApiWrapper.Entities;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Web;
 
-namespace SpotifyApiWrapper.Helpers{
-    public static class ApiHelper{
-        public static string GetApiUrl(string url){
-            return $"https://api.spotify.com/v1/{url}";
+namespace SpotifyApiWrapper.Helpers
+{
+
+    public static class ApiHelper
+    {
+
+        public async static Task<HttpResponseMessage> GetAsync(Token token, Uri url)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+
+                    client.BaseAddress = new Uri(SpotifyUrls.APIV1.ToString());
+                    var response = await client.GetAsync(url);
+                    return response;
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return null;
+            }
         }
 
-        public static HttpWebRequest CreateRequest(Uri uri){
-            var request = WebRequest.CreateHttp(uri);
-            request.Method = "GET";
-            request.Accept = "application/json";
-            request.Headers.Add("Authorization", $"Bearer {SpotifyApi.AccessToken}");
-            return request;
+        public static Uri AddParameter(this Uri url, string paramName, string paramValue)
+        {
+            var uriBuilder = new UriBuilder(url);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query[paramName] = paramValue;
+            uriBuilder.Query = query.ToString();
+
+            return uriBuilder.Uri;
         }
 
-        
+        public static Uri AddParameterFromList(this Uri url, string paramName, List<string> paramValues)
+        {
+            var uriBuilder = new UriBuilder(url);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+            var paramValue = string.Join(",", paramValues);
+
+            query[paramName] = paramValue;
+            uriBuilder.Query = query.ToString();
+
+            return uriBuilder.Uri;
+        }
+
+
+
     }
 }

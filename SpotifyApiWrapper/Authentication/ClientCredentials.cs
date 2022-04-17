@@ -24,7 +24,7 @@ namespace SpotifyApiWrapper.Authentication
         //get the access token
         public async Task<Token> GetToken(AuthParameters parameters)
         {
-            var url = $"https://accounts.spotify.com/api/token";
+            var url = SpotifyUrls.OAuthToken;
             var request = WebRequest.CreateHttp(url);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
