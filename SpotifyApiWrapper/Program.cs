@@ -18,6 +18,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IAlbumManager, AlbumManager>();
 builder.Services.AddScoped<ITokenManager, TokenManager>();
 builder.Services.AddScoped<IClientCredentials, ClientCredentials>();
+builder.Services.AddScoped<IArtistManager, ArtistManager>();
 
 var app = builder.Build();
 
