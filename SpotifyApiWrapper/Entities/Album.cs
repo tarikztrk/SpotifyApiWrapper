@@ -51,9 +51,6 @@ namespace SpotifyApiWrapper.Entities
 
         [JsonPropertyName("tracks")]
         public Paging<Track>? Tracks { get; set; }
-
-
-
     }
 
 }

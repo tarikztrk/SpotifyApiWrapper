@@ -20,6 +20,7 @@ builder.Services.AddScoped<ITokenManager, TokenManager>();
 builder.Services.AddScoped<IClientCredentials, ClientCredentials>();
 builder.Services.AddScoped<IArtistManager, ArtistManager>();
 builder.Services.AddScoped<ITrackManager, TrackManager>();
+builder.Services.AddScoped<IBrowseManager, BrowseManager>();
 
 var app = builder.Build();
 
