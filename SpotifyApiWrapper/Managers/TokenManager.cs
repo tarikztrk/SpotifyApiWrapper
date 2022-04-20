@@ -46,5 +46,35 @@ namespace SpotifyApiWrapper.Managers
             }
             return token;
         }
+
+        public async Task<Token> GetToken(string scope)
+        {
+            var token = new Token();
+            var request = new AuthParameters()
+            {
+                ClientId = _configuration["ClientAuthorization:ClientId"],
+                ClientSecret = _configuration["ClientAuthorization:ClientSecret"],
+                GrantType = _configuration["ClientAuthorization:GrantType"],
+                Scope = scope
+            };
+
+            var cacheKey = "TokenWithScope";
+
+            if (_cacheManager.TryGetValue(cacheKey, out Token cacheValue))
+            {
+                token = cacheValue;
+            }
+            else
+            {
+
+                token = await _clientCredentials.GetToken(request); 
+
+                _cacheManager.Set(cacheKey, token, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(token.ExpiresIn)
+                });
+            }
+            return token;
+        }
     }
 }
