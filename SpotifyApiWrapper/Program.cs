@@ -21,6 +21,7 @@ builder.Services.AddScoped<IClientCredentials, ClientCredentials>();
 builder.Services.AddScoped<IArtistManager, ArtistManager>();
 builder.Services.AddScoped<ITrackManager, TrackManager>();
 builder.Services.AddScoped<IBrowseManager, BrowseManager>();
+builder.Services.AddScoped<IFollowManager, FollowManager>();
 
 var app = builder.Build();
 
