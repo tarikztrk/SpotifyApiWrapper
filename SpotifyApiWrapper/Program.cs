@@ -1,54 +1,64 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SpotifyApiWrapper.Authentication;
-using SpotifyApiWrapper.Entities;
 using SpotifyApiWrapper.Managers;
 using SpotifyApiWrapper.Managers.Interfaces;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
+builder.Services
+    .AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = configuration.GetSection("Auth:Authority").Get<string>();
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false
+        };
+    });
 
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddControllers(opt => { opt.Filters.Add(new AuthorizeFilter()); });
+builder.Services.AddSwaggerGen(options =>
 {
-    //c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpotifyApi", Version = "v1" });
-    c.OperationFilter<AuthorizeOperationFilter>();
-    //c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    //{
-    //    Type = SecuritySchemeType.OAuth2,
-    //    Flows = new OpenApiOAuthFlows
-    //    {
-    //        Implicit = new OpenApiOAuthFlow
-    //        {
-    //            AuthorizationUrl = SpotifyUrls.Authorize,
-    //            TokenUrl = SpotifyUrls.OAuthToken,
-    //            Scopes = new Dictionary<string, string>
-    //                        {
-    //                            { "user-follow-read", "user-follow-read" },
-    //                            { "writeAccess", "Access write operations" }
-    //                        }
-    //        }
-    //    }
-    //});
+    var scheme = new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri(configuration.GetSection("Auth:Swagger:AuthorizationUrl").Get<string>()),
+                TokenUrl = new Uri(configuration.GetSection("Auth:Swagger:TokenUrl").Get<string>())
+            }
+        },
+        Type = SecuritySchemeType.OAuth2
+    };
 
+    options.AddSecurityDefinition("OAuth", scheme);
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    //c.IncludeXmlComments(xmlPath);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Id = "OAuth", Type = ReferenceType.SecurityScheme }
+            },
+            new List<string> { }
+        }
+    });
 });
 
-builder.Services.AddAuthentication();
+
+
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
+
 
 builder.Services.AddScoped<IAlbumManager, AlbumManager>();
 builder.Services.AddScoped<ITokenManager, TokenManager>();
@@ -62,30 +72,31 @@ builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Spotify Api V1");
-        c.OAuthClientId("cleint-id");
-        c.OAuthAppName("OAuth-app");
-        c.OAuthScopeSeparator(" ");
-        c.OAuthUsePkce();
-    });    
-}
+app.UseStaticFiles();
+
+
+app.UseSwagger()
+     .UseSwaggerUI(options =>
+     {
+         //options.EnablePersistAuthorization();
+         options.SwaggerEndpoint("/swagger/v1/swagger.json", "SpotifyApiWrapper");
+         options.OAuthClientId("api-swagger");
+         options.OAuthClientSecret("api-swagger");
+         options.OAuth2RedirectUrl("https://localhost:44344/swagger/oauth2-redirect.html");
+         options.OAuthScopes("user-follow-read", "user-follow-modify");
+         options.OAuthUsePkce();
+         options.InjectStylesheet("/content/swagger-extras.css");
+     });
+
+
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
 
-//app.MapControllers();
+app.MapControllers();
 
 app.Run();
