@@ -54,10 +54,13 @@ namespace SpotifyApiWrapper.Managers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return category;
         }
@@ -89,10 +92,13 @@ namespace SpotifyApiWrapper.Managers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return category;
         }
@@ -130,10 +136,13 @@ namespace SpotifyApiWrapper.Managers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return categoryPlaylists;
         }
@@ -157,10 +166,13 @@ namespace SpotifyApiWrapper.Managers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return genre;
         }
@@ -205,12 +217,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     featuredPlaylists = JsonSerializer.Deserialize<FeaturedPlaylistsResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Featured playlist not found.", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return featuredPlaylists;
         }
@@ -246,12 +269,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     newReleases = JsonSerializer.Deserialize<NewReleaseResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("New release not found.", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return newReleases;
         }

@@ -34,10 +34,13 @@ namespace SpotifyApiWrapper.Controllers
                 var categories = await _browseManager.GetCategories(request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, categories);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -54,10 +57,13 @@ namespace SpotifyApiWrapper.Controllers
                 var category = await _browseManager.GetCategory(categoryId, request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, category);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -76,10 +82,13 @@ namespace SpotifyApiWrapper.Controllers
                 var category = await _browseManager.GetCategoryPlaylists(categoryId, request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, category);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -96,10 +105,13 @@ namespace SpotifyApiWrapper.Controllers
                 var genre = await _browseManager.GetAvailableGenreSeeds();
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, genre);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -116,10 +128,13 @@ namespace SpotifyApiWrapper.Controllers
                 var featuredPlaylists = await _browseManager.GetFeaturedPlaylists(request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, featuredPlaylists);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -136,10 +151,13 @@ namespace SpotifyApiWrapper.Controllers
                 var newReleases = await _browseManager.GetNewReleases(request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, newReleases);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 

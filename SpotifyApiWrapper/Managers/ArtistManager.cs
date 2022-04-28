@@ -30,11 +30,18 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     artist = JsonSerializer.Deserialize<Artist>(jsonResponse);
                 }
+                else
+                {
+                    throw new SpotifyApiException("Artist not found",response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return artist;
 
@@ -71,11 +78,18 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     albums = JsonSerializer.Deserialize<Paging<Album>>(jsonResponse);
                 }
+                else
+                {
+                    throw new SpotifyApiException("Artist albums not found", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return albums;
         }
@@ -99,11 +113,22 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     artists = JsonSerializer.Deserialize<ArtistResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Artists not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return artists;
         }
@@ -127,11 +152,22 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     topTracks = JsonSerializer.Deserialize<TracksResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Artist top tracks not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return topTracks;
         }
@@ -153,11 +189,22 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     relatedArtists = JsonSerializer.Deserialize<ArtistResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Artist related artists not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return relatedArtists;
         }

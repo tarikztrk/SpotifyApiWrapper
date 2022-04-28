@@ -6,7 +6,7 @@ namespace SpotifyApiWrapper.Helpers
 {
     public static class ActionResultHelper
     {
-        public static IActionResult HandleActionResult(this ControllerBase controllerBase, HttpStatusCode statusCode, object obj, string? faultCode = null, string? faultDescription = null)
+        public static IActionResult HandleActionResult(this ControllerBase controllerBase, HttpStatusCode statusCode, object obj, string? faultDescription = null)
         {
 
             if (statusCode.IsSuccessStatusCode())
@@ -29,7 +29,6 @@ namespace SpotifyApiWrapper.Helpers
                     Message = faultDescription
                 };
 
-                controllerBase.Response.Headers.Add("X-Fault-Code", faultCode);
                 controllerBase.Response.Headers.Add("X-Fault-Description", faultDescription);
 
                 if (statusCode == HttpStatusCode.BadRequest)

@@ -46,11 +46,18 @@ namespace SpotifyApiWrapper.Managers
                     return album;
 
                 }
+                else
+                {
+                    throw new SpotifyApiException("Album not found", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return album;
 
@@ -85,14 +92,22 @@ namespace SpotifyApiWrapper.Managers
 
                     return severalAlbums;
                 }
+                else
+                {
+                    throw new SpotifyApiException("Albums not found", response.StatusCode);
+                }
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
+
             return severalAlbums;
 
         }
@@ -131,14 +146,19 @@ namespace SpotifyApiWrapper.Managers
 
                     return tracks;
                 }
-
-
+                else
+                {
+                    throw new SpotifyApiException("Album tracks not found", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return tracks;
         }

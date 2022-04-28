@@ -35,10 +35,13 @@ namespace SpotifyApiWrapper.Controllers
                 var artist = await _artistManager.GetArtist(id);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, artist);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -57,10 +60,13 @@ namespace SpotifyApiWrapper.Controllers
                 var albums = await _artistManager.GetArtistAlbums(id, request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, albums);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -78,10 +84,13 @@ namespace SpotifyApiWrapper.Controllers
                 var artists = await _artistManager.GetArtists(request);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, artists);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -99,10 +108,13 @@ namespace SpotifyApiWrapper.Controllers
                 var tracks = await _artistManager.GetArtistsTopTracks(id, market);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, tracks);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -121,10 +133,13 @@ namespace SpotifyApiWrapper.Controllers
                 var artists = await _artistManager.GetArtistsRelatedArtists(id);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, artists);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 

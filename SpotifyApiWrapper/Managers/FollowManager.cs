@@ -37,11 +37,22 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     retVal = JsonSerializer.Deserialize<List<bool>>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("User following playlist not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
 

@@ -35,12 +35,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     track = JsonSerializer.Deserialize<Entities.Track>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Track not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
             return track;
@@ -70,12 +81,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     tracks = JsonSerializer.Deserialize<TracksResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Tracks not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
             return tracks;
@@ -97,12 +119,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     audioFeatures = JsonSerializer.Deserialize<AudioFeatures>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Audio Features not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
             return audioFeatures;
@@ -128,12 +161,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     audioFeatures = JsonSerializer.Deserialize<AudioFeaturesResponse>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Audio Features not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
             return audioFeatures;
@@ -155,12 +199,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     audioAnalysis = JsonSerializer.Deserialize<AudioAnalysis>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Audio Analysis not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
 
             return audioAnalysis;

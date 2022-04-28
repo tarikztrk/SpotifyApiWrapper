@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpotifyApiWrapper.Entities;
 using SpotifyApiWrapper.Helpers;
 using SpotifyApiWrapper.Managers;
 using SpotifyApiWrapper.Managers.Interfaces;
@@ -32,10 +33,13 @@ namespace SpotifyApiWrapper.Controllers
                 var playlistImages = await _playlistManager.GetPlaylistImages(playlist_id);
                 return this.HandleActionResult(HttpStatusCode.OK, playlistImages);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -52,10 +56,13 @@ namespace SpotifyApiWrapper.Controllers
                 var playlist = await _playlistManager.GetPlaylist(playlist_id, market, fields);
                 return this.HandleActionResult(HttpStatusCode.OK, playlist);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 

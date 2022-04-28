@@ -35,10 +35,13 @@ namespace SpotifyApiWrapper.Controllers
                 var track =await _trackManager.GetTrack(id,market);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, track);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -57,10 +60,13 @@ namespace SpotifyApiWrapper.Controllers
                 var tracks = await _trackManager.GetTracks(ids, market);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, tracks);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -78,10 +84,13 @@ namespace SpotifyApiWrapper.Controllers
                 var audioFeatures = await _trackManager.GetAudioFeatures(id);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, audioFeatures);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -99,10 +108,13 @@ namespace SpotifyApiWrapper.Controllers
                 var audioFeatures = await _trackManager.GetAudiosFeatures(ids);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, audioFeatures);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 
@@ -121,10 +133,13 @@ namespace SpotifyApiWrapper.Controllers
                 var audioAnalysis = await _trackManager.GetAudioAnalysis(id);
                 return this.HandleActionResult(System.Net.HttpStatusCode.OK, audioAnalysis);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 

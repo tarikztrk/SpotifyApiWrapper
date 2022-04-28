@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpotifyApiWrapper.Entities;
 using SpotifyApiWrapper.Entities.Requests;
 using SpotifyApiWrapper.Entities.Response;
 using SpotifyApiWrapper.Helpers;
@@ -35,10 +36,13 @@ namespace SpotifyApiWrapper.Controllers
                 var followingArtists = await _followManager.CheckUserFollowPlaylist(playlist_id, ids);
                 return this.HandleActionResult(HttpStatusCode.OK, followingArtists);
             }
+            catch (SpotifyApiException businessException)
+            {
+                return this.HandleActionResult(businessException.StatusCode, null, businessException.Code);
+            }
             catch (Exception)
             {
-
-                throw;
+                return this.HandleActionResult(System.Net.HttpStatusCode.InternalServerError, null, "SPOTIFY-API-SYSTEM-EXCEPTION");
             }
         }
 

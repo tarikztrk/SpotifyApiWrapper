@@ -29,12 +29,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     playlistImage = JsonSerializer.Deserialize<List<Image>>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Playlist images not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return playlistImage;
         }
@@ -56,12 +67,23 @@ namespace SpotifyApiWrapper.Managers
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     playlist = JsonSerializer.Deserialize<Playlists>(jsonResponse);
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new SpotifyApiException("Playlist not found", response.StatusCode);
+                }
+                else
+                {
+                    throw new SpotifyApiException("Something got wrong.", response.StatusCode);
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                if (ex is SpotifyApiException)
+                {
+                    throw;
+                }
+                throw new Exception();
             }
             return playlist;
         }
