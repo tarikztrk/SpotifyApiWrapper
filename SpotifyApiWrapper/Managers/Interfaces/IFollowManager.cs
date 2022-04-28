@@ -5,6 +5,6 @@ namespace SpotifyApiWrapper.Managers.Interfaces
 {
     public interface IFollowManager
     {
-        Task<FollowingArtistResponse> FollowingArtist(FollowingArtistRequest request);
+        Task<List<bool>> CheckUserFollowPlaylist(string playlist_id, string ids);
     }
 }

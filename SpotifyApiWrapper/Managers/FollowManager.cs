@@ -16,36 +16,26 @@ namespace SpotifyApiWrapper.Managers
             _tokenManager = tokenManager;
         }
 
-        public async Task<FollowingArtistResponse> FollowingArtist(FollowingArtistRequest request)
+        public async Task<List<bool>> CheckUserFollowPlaylist(string playlist_id,  string ids)
         {
-            var followingArtist = new FollowingArtistResponse();
-            var token = await _tokenManager.GetToken("user-follow-read");
+            var retVal = new List<bool>();
+            var token = await _tokenManager.GetToken();
 
             try
             {
-                var url = SpotifyUrls.CurrentUserFollower();
+                var url = SpotifyUrls.PlaylistFollowersContains(playlist_id);
 
-                if (request?.Type != null)
+                if (ids != null)
                 {
-                    url = url.AddParameter("type", request.Type);
+                    url = url.AddParameter("ids", ids);
                 }
-                
-                if (request?.After != null)
-                {
-                    url = url.AddParameter("after", request.After);
-                }
-                
-                if (request?.Limit != null)
-                {
-                    url = url.AddParameter("limit", request.Limit.ToString());
-                }
+               
 
-
-                var response = await ApiHelper.GetAsyncWithScope(token, url, "user-follow-read");
+                var response = await ApiHelper.GetAsync(token, url);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    followingArtist = JsonSerializer.Deserialize<FollowingArtistResponse>(jsonResponse);
+                    retVal = JsonSerializer.Deserialize<List<bool>>(jsonResponse);
                 }
             }
             catch (Exception)
@@ -55,7 +45,7 @@ namespace SpotifyApiWrapper.Managers
             }
 
 
-            return followingArtist;
+            return retVal;
         }
     }
 }

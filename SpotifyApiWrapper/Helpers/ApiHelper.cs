@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using SpotifyApiWrapper.Entities;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 
 namespace SpotifyApiWrapper.Helpers
@@ -8,7 +10,11 @@ namespace SpotifyApiWrapper.Helpers
 
     public static class ApiHelper
     {
-
+        
+        /// <summary>Gets an HTTP response from the Spotify API.</summary>
+        /// <param name="token">The access token to use for the request.</param>
+        /// <param name="url">The URL to request.</param>
+        /// <returns>The response from the Spotify API.</returns>
         public async static Task<HttpResponseMessage> GetAsync(Token token, Uri url)
         {
             try
@@ -29,7 +35,13 @@ namespace SpotifyApiWrapper.Helpers
                 return null;
             }
         }
+        
 
+        /// <summary>Adds a parameter to a URL.</summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="paramName">The parameter name.</param>
+        /// <param name="paramValue">The parameter value.</param>
+        /// <returns>The URL with the parameter added.</returns>
         public static Uri AddParameter(this Uri url, string paramName, string paramValue)
         {
             var uriBuilder = new UriBuilder(url);
@@ -40,6 +52,11 @@ namespace SpotifyApiWrapper.Helpers
             return uriBuilder.Uri;
         }
 
+        /// <summary>Adds a parameter to a URL.</summary>
+        /// <param name="url">The URL to add the parameter to.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <param name="paramValues">The values of the parameter.</param>
+        /// <returns>The URL with the parameter added.</returns>
         public static Uri AddParameterFromList(this Uri url, string paramName, List<string> paramValues)
         {
             var uriBuilder = new UriBuilder(url);

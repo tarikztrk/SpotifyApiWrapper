@@ -23,16 +23,16 @@ namespace SpotifyApiWrapper.Controllers
 
 
         [HttpGet]
-        [Route("me/following")]
-        [SwaggerOperation(Summary = "Get the current user’s followed artists", Description = "Get the current user’s followed artists")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Returns the current user’s followed artists", typeof(FollowingArtistResponse))]
+        [Route("playlists/{playlist_id}/followers/contains")]
+        [SwaggerOperation(Summary = "Check if Users Follow Playlist", Description = "Check if Users Follow Playlist")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Returns true if user follows playlist", typeof(bool))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "The request was made with invalid credentials", typeof(string))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "The request was made with invalid credentials", typeof(string))]
-        public async Task<IActionResult> GetFollowingArtist([FromQuery] FollowingArtistRequest request)
+        public async Task<IActionResult> CheckUserFollowPlaylist([FromRoute] string playlist_id, [FromQuery] string ids)
         {
             try
             {
-                var followingArtists =await _followManager.FollowingArtist(request);
+                var followingArtists = await _followManager.CheckUserFollowPlaylist(playlist_id, ids);
                 return this.HandleActionResult(HttpStatusCode.OK, followingArtists);
             }
             catch (Exception)
@@ -41,6 +41,8 @@ namespace SpotifyApiWrapper.Controllers
                 throw;
             }
         }
+
+        
 
 
     }
