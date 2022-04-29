@@ -39,5 +39,10 @@ docker build . -t spotifyapiwrapper
  docker run --name spotifapiwrapper -p 8081:80 -d spotifyapiwrapper
 ````
 
+After that application will run in the http://localhost:8081/swagger/index.html
+
+
+
+![image](https://user-images.githubusercontent.com/24737692/165965696-13923d64-35cf-4b0e-95d2-a8786cf8c84f.png)
 
 
