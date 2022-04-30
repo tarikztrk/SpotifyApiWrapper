@@ -35,26 +35,29 @@ namespace SpotifyApiWrapper.Authentication
                 var body = $"grant_type={parameters.GrantType}&client_id={parameters.ClientId}&client_secret={parameters.ClientSecret}&redirect_uri={parameters.RedirectUri}";
                 var bodyBytes = Encoding.UTF8.GetBytes(body);
                 request.ContentLength = bodyBytes.Length;
+                
                 using (var stream = request.GetRequestStream())
                 {
                     stream.Write(bodyBytes, 0, bodyBytes.Length);
                 }
+                
                 var response = await request.GetResponseAsync();
                 var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 var parsedResponse = JObject.Parse(responseString);
+                
                 token = new Token
                 {
                     AccessToken = parsedResponse.Value<string>("access_token"),
                     ExpiresIn = parsedResponse.Value<int>("expires_in"),
                     TokenType = parsedResponse.Value<string>("token_type")
                 };
+                
                 return token;
             }
             catch (Exception)
             {
                 throw new SpotifyApiException("Error getting token", HttpStatusCode.Unauthorized);
             }
-            return token;
         }
 
 

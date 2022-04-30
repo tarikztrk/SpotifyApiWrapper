@@ -277,6 +277,7 @@ namespace SpotifyApiWrapper.Managers
                 {
                     throw new SpotifyApiException("Something got wrong.", response.StatusCode);
                 }
+                return newReleases;
 
             }
             catch (Exception ex)
@@ -287,7 +288,7 @@ namespace SpotifyApiWrapper.Managers
                 }
                 throw new Exception();
             }
-            return newReleases;
+            
         }
 
     }

@@ -5,7 +5,7 @@ namespace SpotifyApiWrapper.Entities
     public class Genre
     {
         [JsonPropertyName("genres")]
-        public List<string> Genres { get; set; }
+        public List<string>? Genres { get; set; }
     }
 
 }

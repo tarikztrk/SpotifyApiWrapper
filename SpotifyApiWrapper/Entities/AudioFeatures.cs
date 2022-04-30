@@ -38,19 +38,19 @@ namespace SpotifyApiWrapper.Entities
         public decimal Tempo { get; set; }
 
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonPropertyName("uri")]
-        public string Uri { get; set; }
+        public string? Uri { get; set; }
 
         [JsonPropertyName("track_href")]
-        public string TrackHref { get; set; }
+        public string? TrackHref { get; set; }
 
         [JsonPropertyName("analysis_url")]
-        public string AnalysisUrl { get; set; }
+        public string? AnalysisUrl { get; set; }
 
         [JsonPropertyName("duration_ms")]
         public int DurationMs { get; set; }

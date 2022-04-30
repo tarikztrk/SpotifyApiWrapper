@@ -6,6 +6,6 @@ namespace SpotifyApiWrapper.Entities.Response
     public class CategoriesResponse
     {
         [JsonPropertyName("categories")]
-        public Paging<Category> Categories { get; set; }
+        public Paging<Category>? Categories { get; set; }
     }
 }

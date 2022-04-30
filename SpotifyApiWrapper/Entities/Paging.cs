@@ -9,13 +9,13 @@ namespace SpotifyApiWrapper.Entities
         /// Gets or sets the href.
         /// </summary>
         [JsonPropertyName("href")]
-        public string Href { get; set; }
+        public string? Href { get; set; }
 
         /// <summary>
         /// Gets or sets the items.
         /// </summary>
         [JsonPropertyName("items")]
-        public List<T> Items { get; set; }
+        public List<T>? Items { get; set; }
 
         /// <summary>
         /// Gets or sets the limit.
@@ -27,7 +27,7 @@ namespace SpotifyApiWrapper.Entities
         /// Gets or sets the next.
         /// </summary>
         [JsonPropertyName("next")]
-        public string Next { get; set; }
+        public string? Next { get; set; }
 
         /// <summary>
         /// Gets or sets the offset.
@@ -39,7 +39,7 @@ namespace SpotifyApiWrapper.Entities
         /// Gets or sets the previous.
         /// </summary>
         [JsonPropertyName("previous")]
-        public string Previous { get; set; }
+        public string? Previous { get; set; }
 
         /// <summary>
         /// Gets or sets the total.

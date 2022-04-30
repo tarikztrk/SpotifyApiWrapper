@@ -6,7 +6,7 @@ namespace SpotifyApiWrapper.Helpers
 {
     public static class ActionResultHelper
     {
-        public static IActionResult HandleActionResult(this ControllerBase controllerBase, HttpStatusCode statusCode, object obj, string? faultDescription = null)
+        public static IActionResult HandleActionResult(this ControllerBase controllerBase, HttpStatusCode statusCode, object? obj, string? faultDescription = null)
         {
 
             if (statusCode.IsSuccessStatusCode())

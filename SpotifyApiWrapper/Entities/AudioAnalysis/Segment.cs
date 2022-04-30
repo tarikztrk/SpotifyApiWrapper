@@ -26,10 +26,10 @@ namespace SpotifyApiWrapper.Entities.AudioAnalysis
         public decimal LoudnessEnd { get; set; }
 
         [JsonPropertyName("pitches")]
-        public List<decimal> Pitches { get; set; }
+        public List<decimal>? Pitches { get; set; }
 
         [JsonPropertyName("timbre")]
-        public List<decimal> Timbre { get; set; }
+        public List<decimal>? Timbre { get; set; }
     }
 
 }

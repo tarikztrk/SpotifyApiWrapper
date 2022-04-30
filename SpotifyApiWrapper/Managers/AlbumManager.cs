@@ -59,8 +59,6 @@ namespace SpotifyApiWrapper.Managers
                 }
                 throw new Exception();
             }
-            return album;
-
         }
 
         //get several albums
@@ -73,7 +71,7 @@ namespace SpotifyApiWrapper.Managers
             {
                 var url = SpotifyUrls.Albums();
 
-                if (request?.Ids.Count > 0)
+                if (request?.Ids?.Count > 0)
                 {
                     url = ApiHelper.AddParameter(url, "ids", string.Join(",", request.Ids));
                 }
@@ -108,7 +106,6 @@ namespace SpotifyApiWrapper.Managers
                 throw new Exception();
             }
 
-            return severalAlbums;
 
         }
 
@@ -160,7 +157,6 @@ namespace SpotifyApiWrapper.Managers
                 }
                 throw new Exception();
             }
-            return tracks;
         }
 
 

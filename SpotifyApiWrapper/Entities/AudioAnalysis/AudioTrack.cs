@@ -11,7 +11,7 @@ namespace SpotifyApiWrapper.Entities.AudioAnalysis
         public decimal Duration { get; set; }
 
         [JsonPropertyName("sample_md5")]
-        public string SampleMd5 { get; set; }
+        public string? SampleMd5 { get; set; }
 
         [JsonPropertyName("offset_seconds")]
         public int OffsetSeconds { get; set; }
@@ -59,25 +59,25 @@ namespace SpotifyApiWrapper.Entities.AudioAnalysis
         public decimal ModeConfidence { get; set; }
 
         [JsonPropertyName("codestring")]
-        public string Codestring { get; set; }
+        public string? Codestring { get; set; }
 
         [JsonPropertyName("code_version")]
         public decimal CodeVersion { get; set; }
 
         [JsonPropertyName("echoprintstring")]
-        public string Echoprintstring { get; set; }
+        public string? Echoprintstring { get; set; }
 
         [JsonPropertyName("echoprint_version")]
         public decimal EchoprintVersion { get; set; }
 
         [JsonPropertyName("synchstring")]
-        public string Synchstring { get; set; }
+        public string? Synchstring { get; set; }
 
         [JsonPropertyName("synch_version")]
         public decimal SynchVersion { get; set; }
 
         [JsonPropertyName("rhythmstring")]
-        public string Rhythmstring { get; set; }
+        public string? Rhythmstring { get; set; }
 
         [JsonPropertyName("rhythm_version")]
         public decimal RhythmVersion { get; set; }

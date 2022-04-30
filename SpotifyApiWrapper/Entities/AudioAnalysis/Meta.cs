@@ -5,13 +5,13 @@ namespace SpotifyApiWrapper.Entities.AudioAnalysis
     public class Meta
     {
         [JsonPropertyName("analyzer_version")]
-        public string AnalyzerVersion { get; set; }
+        public string? AnalyzerVersion { get; set; }
 
         [JsonPropertyName("platform")]
-        public string Platform { get; set; }
+        public string? Platform { get; set; }
 
         [JsonPropertyName("detailed_status")]
-        public string DetailedStatus { get; set; }
+        public string? DetailedStatus { get; set; }
 
         [JsonPropertyName("status_code")]
         public int StatusCode { get; set; }
@@ -23,7 +23,7 @@ namespace SpotifyApiWrapper.Entities.AudioAnalysis
         public decimal AnalysisTime { get; set; }
 
         [JsonPropertyName("input_process")]
-        public string InputProcess { get; set; }
+        public string? InputProcess { get; set; }
     }
 
 }

@@ -8,46 +8,46 @@ namespace SpotifyApiWrapper.Entities
         public bool Collaborative { get; set; }
 
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [JsonPropertyName("external_urls")]
-        public Dictionary<string,string> ExternalUrls { get; set; }
+        public Dictionary<string,string>? ExternalUrls { get; set; }
 
         [JsonPropertyName("followers")]
-        public Followers Followers { get; set; }
+        public Followers? Followers { get; set; }
 
         [JsonPropertyName("href")]
-        public string Href { get; set; }
+        public string? Href { get; set; }
 
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonPropertyName("images")]
-        public List<Image> Images { get; set; }
+        public List<Image>? Images { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonPropertyName("owner")]
-        public Owner Owner { get; set; }
+        public Owner? Owner { get; set; }
 
         [JsonPropertyName("primary_color")]
-        public object PrimaryColor { get; set; }
+        public object? PrimaryColor { get; set; }
 
         [JsonPropertyName("public")]
         public bool Public { get; set; }
 
         [JsonPropertyName("snapshot_id")]
-        public string SnapshotId { get; set; }
+        public string? SnapshotId { get; set; }
 
         [JsonPropertyName("tracks")]
-        public Paging<Track> Tracks { get; set; }
+        public Paging<Track>? Tracks { get; set; }
 
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         [JsonPropertyName("uri")]
-        public string Uri { get; set; }
+        public string? Uri { get; set; }
     }
 
 }

@@ -2,8 +2,8 @@
 {
     public class CategoryRequest
     {
-        public string Country { get; set; }
-        public string Locale { get; set; }
+        public string? Country { get; set; }
+        public string? Locale { get; set; }
 
     }
 }

@@ -5,9 +5,9 @@ namespace SpotifyApiWrapper.Entities.Response
     public class FeaturedPlaylistsResponse
     {
         [JsonPropertyName("message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [JsonPropertyName("playlists")]
-        public Paging<Playlists> Playlists { get; set; }
+        public Paging<Playlists>? Playlists { get; set; }
     }
 }

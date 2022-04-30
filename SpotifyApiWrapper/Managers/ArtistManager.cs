@@ -103,8 +103,10 @@ namespace SpotifyApiWrapper.Managers
             try
             {
                 var url = SpotifyUrls.Artists();
-
-                url = ApiHelper.AddParameterFromList(url, "ids", request.Ids);
+                if (request.Ids != null)
+                {
+                    url = ApiHelper.AddParameterFromList(url, "ids", request.Ids);
+                }
 
                 var response = await ApiHelper.GetAsync(token, url);
 
