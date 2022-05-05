@@ -1,3 +1,5 @@
+[![.NET](https://github.com/tarikztrk/SpotifySwaggerAPi/actions/workflows/dotnet.yml/badge.svg)](https://github.com/tarikztrk/SpotifySwaggerAPi/actions/workflows/dotnet.yml)
+
 # SpotifyApiWrapper
 
 .NET 6 wrapper for the Spotify Web API.
